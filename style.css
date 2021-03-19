@@ -1,0 +1,52 @@
+.jumbotron {
+    background-color: #ffffff;
+    padding-top: 1rem;
+}
+
+.jumbotron h1,
+.jumbotron p {
+    color: black;
+}
+
+.jumbotron {
+    padding-top: 5rem;
+}
+
+.svg {
+    display: none;
+}
+
+.about {
+    background-color: #14213d;
+    margin-top: -1px;
+}
+
+.about h2,
+.about .text {
+    color: #ffffff;
+}
+
+.abc {
+    margin-top: -1px;
+}
+
+section {
+    padding-top: 4rem;
+}
+
+footer {
+    margin-top: -1px;
+}
+
+@media (max-width: 767.98px) {
+    .about-text {
+        font-size: 14px;
+
+    }
+
+    .svg {
+        display: block;
+    }
+
+
+}
