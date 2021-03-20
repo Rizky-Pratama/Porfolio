@@ -163,6 +163,10 @@
                     <h2 text-about>Contact Me</h2>
                 </div>
             </div>
+            <div class="alert alert-dark alert-dismissible fade show d-none" role="alert">
+                <strong>Succes!</strong> your message has been sent
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
             <div class="row justify-content-center align-self-start">
                 <div class="col-lg-3 mb-3">
                     <div class="card">
@@ -180,32 +184,37 @@
                 </div>
                 <div class="col-lg-7 float-end">
                     <div class="card">
-                        <form>
+                        <form name="kontak">
                             <div class="row m-3">
                                 <label for="text" class="col-lg-3 col-form-label">Name</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" id="text">
+                                    <input type="text" class="form-control" id="text" name="nama">
                                 </div>
                             </div>
                             <div class="row m-3">
                                 <label for="inputEmail3" class="col-lg-3 col-form-label">Email</label>
                                 <div class="col-lg-9">
-                                    <input type="email" class="form-control" id="inputEmail3">
+                                    <input type="email" inputmode="numeric" class="form-control" id="inputEmail3"
+                                        name="email">
                                 </div>
                             </div>
                             <div class="row m-3">
                                 <label for="Number" class="col-lg-3 col-form-label">Number Phone</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" id="Number">
+                                    <input type="text" class="form-control" id="Number" name="nomor">
                                 </div>
                             </div>
                             <div class="row m-3">
                                 <label for="Messages" class="col-lg-3 col-form-label">Messages</label>
                                 <div class="col-lg-9">
-                                    <input type="text" class="form-control" id="Messages">
+                                    <input type="text" class="form-control" id="Messages" name="pesan">
                                 </div>
                             </div>
-                            <button type="submit" class="btn btn-outline-dark m-4">Kirim</button>
+                            <button type="submit" class="btn btn-outline-dark m-4 btn-kirim">Kirim</button>
+                            <button class="btn btn-dark btn-loading d-none m-4" type="button" disabled>
+                                <span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
+                                Loading...
+                            </button>
                         </form>
                     </div>
                 </div>
@@ -234,7 +243,39 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-b5kHyXgcpbZJO/tY9Ul7kGkf1S0CWuKcCD38l8YkeH8z8QjE0GmW1gYU5S9FOnJ0" crossorigin="anonymous">
     </script>
+    <script>
+        const scriptURL =
+            'https://script.google.com/macros/s/AKfycbz4RVQ8tUtZ32fylVhyhRxPaFrQAqqu1ZxN0YDj_7Y8tiRIAMpyf4ik0YIGcsIIQ3xAow/exec'
+        const form = document.forms['kontak']
+        const btnKirim = document.querySelector('.btn-kirim')
+        const btnLoading = document.querySelector('.btn-loading')
+        const alert = document.querySelector('.alert')
 
+        form.addEventListener('submit', e => {
+            e.preventDefault()
+            // tombol submit di klik
+            // tampilkan tombol loading, hilangkan tombol kirim
+            btnLoading.classList.toggle('d-none');
+            btnKirim.classList.toggle('d-none');
+            fetch(scriptURL, {
+                    method: 'POST',
+                    body: new FormData(form)
+                })
+                .then(response => {
+                    // tampilkan tombol loading, hilangkan tombol kirim dan tampilkan alert
+                    btnLoading.classList.toggle('d-none');
+                    btnKirim.classList.toggle('d-none');
+                    alert.classList.toggle('d-none');
+                    // reset form
+                    form.reset();
+
+                    console.log('Success!', response)
+                })
+                .catch(error => {
+                    console.error('Error!', error.message)
+                })
+        })
+    </script>
 </body>
 
 </html>
